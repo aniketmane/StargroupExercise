@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/station_navigation"
+    app:startDestination="@id/stationSearchFragment">
+
+    <fragment
+        android:id="@+id/stationSearchFragment"
+        android:name="com.example.stargroupexercise.ui.view.search.StationSearchFragment"
+        android:label="StationSearchFragment">
+
+
+        <action
+            android:id="@+id/action_stationSearchFragment_to_stationDetailsFragment"
+            app:destination="@id/stationDetailsFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/stationDetailsFragment"
+        android:name="com.example.stargroupexercise.ui.view.detail.StationDetailFragment"
+        android:label="StationDetailFragment">
+
+    </fragment>
+
+
+</navigation>

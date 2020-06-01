@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">StarGroupExercise</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="enter_destination_station">Enter destination station</string>
+    <string name="search">Search</string>
+    <string name="station_name">Station Name:</string>
+    <string name="arrival_time">Arrival Time:</string>
+    <string name="destination">Destination:</string>
+    <string name="direction">Direction:</string>
+    <string name="expected_arrival">Expected Arrival:</string>
+    <string name="expected_departure">Expected Departure:</string>
+    <string name="status">Status:</string>
+    <string name="argStationData">stationData</string>
+</resources>
