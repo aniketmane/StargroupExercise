@@ -1,9 +1,9 @@
 package com.example.stargroupexercise.ui.view.search
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -18,6 +18,7 @@ import com.example.stargroupexercise.ui.view.BaseStationFragment
 import com.example.stargroupexercise.utils.Resource
 import com.example.stargroupexercise.utils.Status
 import com.example.stargroupexercise.utils.hideKeyboard
+import com.example.stargroupexercise.utils.isConnected
 import kotlinx.android.synthetic.main.fragment_station_search.*
 
 class StationSearchFragment : BaseStationFragment(R.layout.fragment_station_search),
@@ -49,19 +50,26 @@ class StationSearchFragment : BaseStationFragment(R.layout.fragment_station_sear
                     Log.d("TestData", it.toString());
                     renderList(it)
                 }
-                rvStationList.visibility = View.VISIBLE
-                progressBar.visibility = View.GONE
+                uiVisibility(View.GONE, View.VISIBLE, View.GONE)
             }
             Status.LOADING -> {
-                progressBar.visibility = View.VISIBLE
-                rvStationList.visibility = View.INVISIBLE
+                uiVisibility(View.VISIBLE, View.INVISIBLE, View.GONE)
             }
             Status.ERROR -> {
                 //Handle Error
-                progressBar.visibility = View.GONE
-                Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
+                uiVisibility(View.GONE, View.INVISIBLE, View.VISIBLE)
             }
         }
+    }
+
+    private fun uiVisibility(
+        pbVisibility: Int,
+        rvVisibility: Int,
+        dataNotAvailableVisibility: Int
+    ) {
+        progressBar.visibility = pbVisibility
+        rvStationList.visibility = rvVisibility
+        tvDataNotAvailable.visibility = dataNotAvailableVisibility
     }
 
     private fun setUpSearchDataObserver() {
@@ -105,12 +113,23 @@ class StationSearchFragment : BaseStationFragment(R.layout.fragment_station_sear
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btSearch -> {
-                viewModel.stationName?.value = etTo.text.toString()
-                setUpApiObserver()
-                setUpSearchDataObserver()
-                hideKeyboard()
+                if (viewModel.isValidInput(etTo.text.toString()) && requireContext().isConnected()) {
+                    viewModel.stationName?.value = etTo.text.toString()
+                    setUpApiObserver()
+                    setUpSearchDataObserver()
+                    hideKeyboard()
+                } else {
+                    if (!requireContext().isConnected()) {
+                        uiVisibility(View.GONE, View.INVISIBLE, View.VISIBLE)
+                        tvDataNotAvailable.setText(R.string.network_unavailable)
+                    } else {
+                        etTo.error = getString(R.string.invalid_input)
+                        uiVisibility(View.GONE, View.INVISIBLE, View.VISIBLE)
+                    }
+                }
             }
         }
     }
+
 
 }

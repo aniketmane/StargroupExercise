@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.stargroupexercise.data.model.ObjStationData
 import com.example.stargroupexercise.data.repository.StationApiRepository
-import com.example.stargroupexercise.ui.view.StationSharedViewModel
+import com.example.stargroupexercise.ui.base.BaseViewModel
 import com.example.stargroupexercise.utils.Resource
 import com.example.stargroupexercise.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
@@ -12,11 +12,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.regex.Pattern
 
 class StationViewModel(
     private val apiRepository: StationApiRepository
-) : StationSharedViewModel() {
+) : BaseViewModel() {
     private val stations = SingleLiveEvent<Resource<List<ObjStationData>>>()
+    private val INPUT_VALIDATION = "^[a-zA-Z_-]{3,15}$"
     val selectedStation = MutableLiveData<ObjStationData>()
 
     fun getSelectedStationData(): LiveData<ObjStationData>? {
@@ -32,7 +34,10 @@ class StationViewModel(
                 apiRepository.getTrainsByStationName(stationName, 20).catch {
                     stations.postValue(Resource.error(it.toString(), null))
                 }.collect {
-                    stations.postValue(Resource.success(it.stationData))
+                    if (it.stationData.isNullOrEmpty())
+                        stations.postValue(Resource.error(it.toString(), null))
+                    else
+                        stations.postValue(Resource.success(it.stationData))
                 }
             }
         }
@@ -47,8 +52,8 @@ class StationViewModel(
         return stationName
     }
 
-    fun afterUserNameChange(s: CharSequence) {
-        this.stationName.apply { s }
+    fun isValidInput(inputText: String): Boolean {
+        return Pattern.compile(INPUT_VALIDATION).matcher(inputText).matches()
     }
 
 }

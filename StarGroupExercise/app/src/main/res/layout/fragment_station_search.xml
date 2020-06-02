@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.testapp.fragments.CustomFragment">
 
     <data>
+
         <variable
             name="StationVM"
             type="com.example.stargroupexercise.ui.view.search.StationViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,10 +23,9 @@
             android:layout_marginTop="25dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="70dp"
-            app:afterTextChanged="@{(edtitable)->StationVM.afterUserNameChange(edtitable)}"
             android:ems="10"
             android:hint="@string/enter_destination_station"
-            android:inputType="textPersonName"
+            android:inputType="text"
             app:layout_constraintBottom_toTopOf="@+id/rvStationList"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +54,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btSearch" />
+
+        <TextView
+            android:id="@+id/tvDataNotAvailable"
+            style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:foregroundGravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/data_not_available"
+            android:textColor="@android:color/darker_gray"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/btSearch"
+            tools:visibility="visible" />
 
         <ProgressBar
             android:id="@+id/progressBar"

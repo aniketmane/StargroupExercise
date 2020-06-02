@@ -12,4 +12,7 @@
     <string name="expected_departure">Expected Departure:</string>
     <string name="status">Status:</string>
     <string name="argStationData">stationData</string>
+    <string name="data_not_available">Data not available</string>
+    <string name="invalid_input" >Please enter valid input</string>
+    <string name="network_unavailable">Network unavailable</string>
 </resources>

@@ -11,8 +11,5 @@ open class BaseStationFragment(layoutId: Int) : BaseFragment<StationViewModel>(l
 
     override val vmFactory: ViewModelFactory =
         ViewModelFactory(StationApiRepositoryImpl(NetworkBuilder.apiService))
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
+    
 }

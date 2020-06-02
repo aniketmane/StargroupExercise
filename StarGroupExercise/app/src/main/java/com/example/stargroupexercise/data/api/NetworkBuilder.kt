@@ -17,7 +17,7 @@ object NetworkBuilder {
             .addConverterFactory(
                 createNonStrict(
                     Persister(
-                        AnnotationStrategy() // important part!
+                        AnnotationStrategy()
                     )
                 )
             )

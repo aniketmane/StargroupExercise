@@ -1,9 +1,7 @@
 package com.example.stargroupexercise.ui.view.detail
-
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.example.stargroupexercise.BR
-
 
 class StationDetailViewModel : BaseObservable() {
     private var stationFullName: String = ""

@@ -19,9 +19,4 @@ abstract class BaseFragment<VM : BaseViewModel>(fragmentLayout: Int) : Fragment(
             vmFactory
         ).get(viewModelClass)
     }
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-    }
-
 }

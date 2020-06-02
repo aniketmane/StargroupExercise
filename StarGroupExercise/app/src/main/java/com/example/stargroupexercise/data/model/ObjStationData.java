@@ -2,33 +2,6 @@ package com.example.stargroupexercise.data.model;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
-
-/* This is an example XML Response for this type of object:
-
-<objStationData>
-    <Servertime>2016-04-24T14:39:30.117</Servertime>
-    <Traincode>D905</Traincode>
-    <Stationfullname>Broombridge</Stationfullname>
-    <Stationcode>BBRDG</Stationcode>
-    <Querytime>14:39:30</Querytime>
-    <Traindate>24 Apr 2016</Traindate>
-    <Origin>Dublin Pearse</Origin>
-    <Destination>Maynooth</Destination>
-    <Origintime>14:43</Origintime>
-    <Destinationtime>15:27</Destinationtime>
-    <Status>No Information</Status>
-    <Lastlocation/>
-    <Duein>20</Duein>
-    <Late>0</Late>
-    <Exparrival>14:58</Exparrival>
-    <Expdepart>14:59</Expdepart>
-    <Scharrival>14:58</Scharrival>
-    <Schdepart>14:59</Schdepart>
-    <Direction>Northbound</Direction>
-    <Traintype>ARROW</Traintype>
-    <Locationtype>S</Locationtype>
-</objStationData>
- */
 @Root(name = "objStationData")
 public class ObjStationData {
     @Element(name = "Servertime")
