@@ -4,7 +4,10 @@ Coding assignment
 Introduction
 ------------
 
-Application or display destination train station information.
+Application to display Train Station information.
+Search any station for Irish rail & get the desired train list. 
+Click on the required station & get detailed information about the train.
+
 
 Getting Started
 ---------------
