@@ -1,4 +1,4 @@
-package com.example.stargroupexercise.ui.view.search
+package com.example.stargroupexercise.ui.view
 
 import android.os.Bundle
 import com.example.stargroupexercise.R
