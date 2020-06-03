@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stargroupexercise.R
 import com.example.stargroupexercise.data.model.ObjStationData
+import com.example.stargroupexercise.utils.debounceClick
 import kotlinx.android.synthetic.main.station_list_item.view.*
 
 class StationListAdapter(
@@ -17,7 +18,7 @@ class StationListAdapter(
         fun bind(station: ObjStationData, clickListener: OnItemClickListener) {
             itemView.tvStationName.text = station.Destination
             itemView.tvStationTime.text = station.Destinationtime
-            itemView.setOnClickListener {
+            itemView.debounceClick {
                 clickListener.onItemClicked(station)
             }
         }
@@ -37,6 +38,7 @@ class StationListAdapter(
         holder.bind(station[position], itemClickListener)
 
     fun addData(list: List<ObjStationData>) {
+        if (station.isNotEmpty()) station.clear()
         station.addAll(list)
     }
 

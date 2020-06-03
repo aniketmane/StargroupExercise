@@ -1,7 +1,6 @@
 package com.example.stargroupexercise.ui.view.search
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.stargroupexercise.data.model.ObjStationData
 import com.example.stargroupexercise.data.repository.StationApiRepository
 import com.example.stargroupexercise.ui.base.BaseViewModel
@@ -17,21 +16,22 @@ import java.util.regex.Pattern
 class StationViewModel(
     private val apiRepository: StationApiRepository
 ) : BaseViewModel() {
-    private val stations = SingleLiveEvent<Resource<List<ObjStationData>>>()
-    private val INPUT_VALIDATION = "^[a-zA-Z_-]{3,15}$"
-    val selectedStation = MutableLiveData<ObjStationData>()
+    private val stations by lazy { SingleLiveEvent<Resource<List<ObjStationData>>>() }
+    private val INPUT_VALIDATION by lazy { "^[a-zA-Z\\s]{3,50}$" }
+    private val NUMBER_OF_MIN by lazy { 30 }
+    val selectedStation by lazy { SingleLiveEvent<ObjStationData>() }
 
-    fun getSelectedStationData(): LiveData<ObjStationData>? {
+    fun getSelectedStationData(): SingleLiveEvent<ObjStationData>? {
         return selectedStation
     }
 
-    val stationName: MutableLiveData<CharSequence>? = MutableLiveData<CharSequence>()
+    val stationName: SingleLiveEvent<CharSequence>? = SingleLiveEvent()
 
     fun fetchStations(stationName: String) {
         launch {
             withContext(Dispatchers.IO) {
                 stations.postValue(Resource.loading(null))
-                apiRepository.getTrainsByStationName(stationName, 20).catch {
+                apiRepository.getTrainsByStationName(stationName, NUMBER_OF_MIN).catch {
                     stations.postValue(Resource.error(it.toString(), null))
                 }.collect {
                     if (it.stationData.isNullOrEmpty())
@@ -47,8 +47,11 @@ class StationViewModel(
     fun getStations(): LiveData<Resource<List<ObjStationData>>> {
         return stations
     }
+    fun retrieveStations() {
+        return stations.call()
+    }
 
-    fun getSearchedStationName(): LiveData<CharSequence>? {
+    fun getSearchedStationName(): SingleLiveEvent<CharSequence>? {
         return stationName
     }
 
